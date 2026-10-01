@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Winter Arc 360°</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">❄</div>
+
+            <div>
+                <h2>WINTER ARC</h2>
+                <small>360° SYSTEM</small>
+            </div>
+        </div>
+
+        <nav>
+
+            <button class="nav-btn active" data-page="dashboard">
+                🏠 Dashboard
+            </button>
+
+            <button class="nav-btn" data-page="today">
+                ✓ Today
+            </button>
+
+            <button class="nav-btn" data-page="calendar">
+                📅 Calendar
+            </button>
+
+            <button class="nav-btn" data-page="analytics">
+                📊 Analytics
+            </button>
+
+            <button class="nav-btn" data-page="goals">
+                🎯 Goals
+            </button>
+
+            <button class="nav-btn" data-page="journal">
+                ✍ Journal
+            </button>
+
+            <button class="nav-btn" data-page="achievements">
+                🏆 Achievements
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="user-box">
+                <div class="avatar">W</div>
+
+                <div>
+                    <strong id="sideName">
+                        Winter Warrior
+                    </strong>
+
+                    <small>
+                        Personal Growth
+                    </small>
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <p class="eyebrow">
+                    PERSONAL COMMAND CENTER
+                </p>
+
+                <h1 id="pageTitle">
+                    Dashboard
+                </h1>
+            </div>
+
+            <button
+                class="quick-btn"
+                onclick="openQuickAdd()"
+            >
+                ＋ Quick Add
+            </button>
+
+        </header>
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <section
+            id="dashboard"
+            class="page active"
+        >
+
+            <div class="hero">
+
+                <div>
+
+                    <span class="badge">
+                        WINTER ARC
+                    </span>
+
+                    <h2 id="greeting">
+                        Build the version of yourself you want.
+                    </h2>
+
+                    <p id="currentDate"></p>
+
+                </div>
+
+                <div class="score-circle">
+
+                    <span id="dashboardScore">
+                        0%
+                    </span>
+
+                    <small>
+                        Today's Score
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <span>🔥 Streak</span>
+                    <strong id="streak">
+                        0
+                    </strong>
+                    <small>days</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>✓ Habits</span>
+                    <strong id="habitCount">
+                        0/0
+                    </strong>
+                    <small>completed</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>😴 Sleep</span>
+                    <strong id="sleepValue">
+                        —
+                    </strong>
+                    <small>hours</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>⭐ XP</span>
+                    <strong id="xp">
+                        0
+                    </strong>
+                    <small>points</small>
+                </div>
+
+            </div>
+
+
+            <!-- GRAPH ROW -->
+
+            <div class="two-column">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h3>
+                                Performance
+                            </h3>
+
+                            <p>
+                                Your daily performance
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="chart-container">
+
+                        <canvas id="performanceChart"></canvas>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h3>
+                                Life Balance
+                            </h3>
+
+                            <p>
+                                Your growth areas
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="chart-container">
+
+                        <canvas id="balanceChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TODAY HABITS -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h3>
+                            Today's Habits
+                        </h3>
+
+                        <p>
+                            Complete your daily habits
+                        </p>
+                    </div>
+
+                </div>
+
+                <div id="dashboardHabits"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TODAY ================= -->
+
+        <section
+            id="today"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Today's Progress
+                    </h2>
+
+                    <p>
+                        Enter your daily information.
+                    </p>
+
+                </div>
+
+                <button
+                    class="primary-btn"
+                    onclick="saveToday()"
+                >
+                    Save Progress
+                </button>
+
+            </div>
+
+
+            <div class="two-column">
+
+                <!-- HABITS -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            My Habits
+                        </h3>
+
+                        <button
+                            class="small-btn"
+                            onclick="addHabit()"
+                        >
+                            + Habit
+                        </button>
+
+                    </div>
+
+                    <div id="todayHabits"></div>
+
+                </div>
+
+
+                <!-- DAILY INPUTS -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            Daily Check-In
+                        </h3>
+
+                    </div>
+
+                    <label>
+                        Sleep Hours
+
+                        <input
+                            id="sleepInput"
+                            type="number"
+                            min="0"
+                            max="24"
+                            step="0.5"
+                            placeholder="8"
+                        >
+                    </label>
+
+
+                    <label>
+                        Study / Deep Work (minutes)
+
+                        <input
+                            id="studyInput"
+                            type="number"
+                            min="0"
+                            placeholder="120"
+                        >
+                    </label>
+
+
+                    <label>
+                        Mood (1–10)
+
+                        <input
+                            id="moodInput"
+                            type="number"
+                            min="1"
+                            max="10"
+                            placeholder="8"
+                        >
+                    </label>
+
+
+                    <label>
+                        Water (glasses)
+
+                        <input
+                            id="waterInput"
+                            type="number"
+                            min="0"
+                            placeholder="8"
+                        >
+                    </label>
+
+
+                    <label>
+                        Daily Reflection
+
+                        <textarea
+                            id="reflectionInput"
+                            rows="5"
+                            placeholder="What went well today?"
+                        ></textarea>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CALENDAR ================= -->
+
+        <section
+            id="calendar"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Calendar
+                    </h2>
+
+                    <p>
+                        Your month at a glance.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div
+                    id="calendarGrid"
+                    class="calendar-grid"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ANALYTICS ================= -->
+
+        <section
+            id="analytics"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Analytics Lab
+                    </h2>
+
+                    <p>
+                        Understand your progress.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-grid">
+
+                <div class="card">
+
+                    <h3>
+                        Habit Completion
+                    </h3>
+
+                    <div class="chart-container">
+                        <canvas id="habitChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Sleep
+                    </h3>
+
+                    <div class="chart-container">
+                        <canvas id="sleepChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Study Time
+                    </h3>
+
+                    <div class="chart-container">
+                        <canvas id="studyChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Mood
+                    </h3>
+
+                    <div class="chart-container">
+                        <canvas id="moodChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= GOALS ================= -->
+
+        <section
+            id="goals"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Goals
+                    </h2>
+
+                    <p>
+                        Your major missions.
+                    </p>
+
+                </div>
+
+                <button
+                    class="primary-btn"
+                    onclick="addGoal()"
+                >
+                    + New Goal
+                </button>
+
+            </div>
+
+
+            <div
+                id="goalsList"
+                class="goals-grid"
+            ></div>
+
+        </section>
+
+
+        <!-- ================= JOURNAL ================= -->
+
+        <section
+            id="journal"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Journal
+                    </h2>
+
+                    <p>
+                        Reflect and understand yourself.
+                    </p>
+
+                </div>
+
+                <button
+                    class="primary-btn"
+                    onclick="addJournal()"
+                >
+                    + New Entry
+                </button>
+
+            </div>
+
+
+            <div id="journalList"></div>
+
+        </section>
+
+
+        <!-- ================= ACHIEVEMENTS ================= -->
+
+        <section
+            id="achievements"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Achievements
+                    </h2>
+
+                    <p>
+                        Earn achievements by staying consistent.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="achievementList"
+                class="achievement-grid"
+            ></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+    id="modal"
+    class="modal hidden"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="close-btn"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
